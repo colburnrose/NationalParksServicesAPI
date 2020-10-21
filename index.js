@@ -22,7 +22,7 @@ function displayResults(response) {
         <li><h2>${response.data[i].fullName}</h2>
         <p>${response.data[i].description}</p>
         <p>${response.data[i].url}</p>
-        <p>Address: ${address.line1}, ${address.city}${address.stateCode}, ${address.postalCode}</p>
+        <p>Address: ${address.line1}, ${address.city} ${address.stateCode}, ${address.postalCode}</p>
         </li>
         `
       );
@@ -46,6 +46,7 @@ function getNationalParksService(query, maxResults = 10) {
   const queryString = formatQueryParams(params);
   const url = URL + "?" + queryString;
   console.log("Request initiated...");
+
   fetch(url, options)
     .then((response) => {
       if (response.ok) {
@@ -64,9 +65,9 @@ function watchForm() {
   $("form").submit((e) => {
     e.preventDefault();
     console.log("App activiated...");
-    let park = $("#js-search-state").val();
+    let state = $("#js-search-state").val();
     let number = $("#js-max-results").val();
-    getNationalParksService(park, number);
+    getNationalParksService(state, number);
   });
 }
 
