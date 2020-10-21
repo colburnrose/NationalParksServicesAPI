@@ -1,3 +1,5 @@
+"use strict";
+
 const apiKey = "alFfMlptmgQPndZf6pB7FmLk8BwFjFPrMFRcHQwu";
 const URL = "https://developer.nps.gov/api/v1/parks";
 
@@ -13,27 +15,26 @@ function displayResults(response) {
   $("#results-list").empty();
 
   for (let i = 0; i < response.data.length; i++) {
-    $("#results-list").append(
-      `
+    let address = response.data[i].addresses[i];
+    if (address !== undefined) {
+      $("#results-list").append(
+        `
         <li><h2>${response.data[i].fullName}</h2>
         <p>${response.data[i].description}</p>
         <p>${response.data[i].url}</p>
-        <p>Address: ${response.data[i].addresses[i].line1},
-            ${response.data[i].addresses[i].city}
-            ${response.data[i].addresses[i].stateCode}, 
-            ${response.data[i].addresses[i].postalCode} 
-        </p>
+        <p>Address: ${address.line1}, ${address.city}${address.stateCode}, ${address.postalCode}</p>
         </li>
         `
-    );
+      );
+    }
   }
   $("#results").removeClass("hidden");
 }
 
 function getNationalParksService(query, maxResults = 10) {
   const params = {
-    parkCode: query,
-    total: maxResults,
+    stateCode: query,
+    limit: maxResults,
   };
 
   const options = {
@@ -44,8 +45,7 @@ function getNationalParksService(query, maxResults = 10) {
 
   const queryString = formatQueryParams(params);
   const url = URL + "?" + queryString;
-  console.log(url);
-
+  console.log("Request initiated...");
   fetch(url, options)
     .then((response) => {
       if (response.ok) {
@@ -64,7 +64,7 @@ function watchForm() {
   $("form").submit((e) => {
     e.preventDefault();
     console.log("App activiated...");
-    let park = $("#js-search-park").val();
+    let park = $("#js-search-state").val();
     let number = $("#js-max-results").val();
     getNationalParksService(park, number);
   });

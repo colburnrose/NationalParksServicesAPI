@@ -2,10 +2,38 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #6d5a49;
+  color: #000000;
+}
+h1,
+p {
+  color: #000;
+}
+ul {
+  list-style: none;
+}
+
+button,
+input[type="text"] {
+  padding: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .container {
+  max-width: 600px;
+  margin: 0 auto;
   text-align: center;
 }
 
-ul {
-  list-style: none;
+.error-message {
+  color: red;
+}
+
+.hidden {
+  display: none;
 }
